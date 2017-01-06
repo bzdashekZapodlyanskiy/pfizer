@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+
+
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" type="text/css" href="slick-1.5.9/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="slick-1.5.9/slick/slick-theme.css"/>
+    <script src="jquery-2.2.2.min.js"></script>
+    <script src="lib.js"></script>
+    <script src="DragManager.js"></script>
+
+    <script>
+        var BeepRight = document.createElement('audio');
+        var BeepWrong = document.createElement('audio');
+
+        var beeped = function() {
+            BeepRight.setAttribute('src', 'answer-right.mp3');
+            BeepRight.load();
+            BeepWrong.setAttribute('src', 'answer-wrong.mp3');
+            BeepWrong.load();
+            /* Beep.play();*/
+            console.log("beeped");
+        };
+
+        dragManager.onDragCancel = function(dragObject) {
+            dragObject.avatar.rollback();
+        };
+        dragManager.onDragEnd = function(dragObject, dropElem) {
+
+            /*DROP OBJECT STYLING*/
+            var dropId = $(dropElem).data("id");
+            console.log("dropId", dropId);
+            var dropInner = $(dropElem).html();
+            var step = document.getElementById(dropId);
+            console.log("step", step);
+
+            /*DRAG OBJECT STYLING*/
+            var dragId = $(dragObject.elem).data("id");;
+            console.log("dragId", dragId);
+            var dragElemContent = $(dragObject.elem).html();
+            console.log("dragElemContent", dragElemContent);
+            $(dropElem).html(dragElemContent)
+
+
+            if ((dragId == 4) && (dropId == 1)) {
+                dragObject.elem.style.display = 'none';
+                $(dropElem).addClass("drop_true");
+                $(step).addClass("true_step");
+                BeepRight.play();
+            } else if ((dragId == 7) && (dropId == 2)) {
+                dragObject.elem.style.display = 'none';
+                $(dropElem).addClass("drop_true");
+                $(step).addClass("true_step");
+                BeepRight.play();
+            } else if ((dragId == 6) && (dropId == 3)) {
+                dragObject.elem.style.display = 'none';
+                $(dropElem).addClass("drop_true");
+                $(step).addClass("true_step");
+                BeepRight.play();
+            } else if ((dragId == 5) && (dropId == 4)) {
+                dragObject.elem.style.display = 'none';
+                $(dropElem).addClass("drop_true");
+                $(step).addClass("true_step");
+                BeepRight.play();
+            } else if ((dragId == 2) && (dropId == 5)) {
+                dragObject.elem.style.display = 'none';
+                $(dropElem).addClass("drop_true");
+                $(step).addClass("true_step");
+                BeepRight.play();
+            } else {
+                /*ВСЕ ОСТАЛЬНЫЕ КОМБИНАЦИИ - НЕВЕРНО*/
+                dragObject.avatar.rollback();
+                $(".result").addClass("modal_wrong");
+                $(dropElem).addClass("drop_wrong");
+                $(step).addClass("wrong_step");
+
+                BeepWrong.play();
+
+                setTimeout(function() {
+                    $(".result").removeClass("modal_wrong")
+
+                }, 800);
+
+                setTimeout(function() {
+                    $(dropElem).removeClass("drop_wrong");
+                    $(step).removeClass("wrong_step")
+                    $(dropElem).html(dropInner)
+                }, 1000);
+            }
+
+            showCounter = $(".drop_true");
+            console.log(showCounter.length);
+            if (showCounter.length == 5) {
+                $(".submit").addClass("slideUp")
+            }
+
+           /* dropElem.className = 'computer computer-smile';*/
+           /*dragObject.elem.style.display = 'none';*/
+
+            /*setTimeout(function() { dropElem.className = 'computer'; }, 200);*/ /*ЗДЕСЬ ЗАДАЕТСЯ КЛАСС ПОСЛЕ ДРОПА*/
+
+
+
+        };
+    </script>
+
+
+
+</head>
+
+<body onload="findTIME();" >
+
+
+    <div class="container_detail" data-apteka="5">
+        <div class="modal-wrong-sleep"></div>
+        <div class="course-title">
+            А что, если...?
+        </div>
+        <div class="introduce">
+            <div class="photo">
+                <img src="img/pervopr_03.png" width="257" height="257" style="border-radius: 10px">
+                <div class="apteka_num">
+                    Аптека 4
+                </div>
+            </div>
+            <button class="beep-load">Зайти в АПТЕКУ 4</button>
+
+            <div class="about">
+                <p>
+                    <span>Александра</span><br/>
+                    27 лет
+                </p>
+                <span class="content">
+                    При обращении покупателя с описанием симптомов угревой сыпи/прыщей, я рекомендую Зинерит на базе маркетингового контракта аптечной сети с производителем.
+                </span>
+            </div>
+        </div>
+
+        <div class="timer">
+            <div class="numbers">
+
+                <noscript><p>Извините, для работы приложения нужен включённый JavaScript</p></noscript>
+
+                <form name="clockform">
+                    <p>
+                        <input name="clock" size="12" maxlength="12" value="00:00">
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <div class="steps">
+            <div class="step" id="1" data-id="1" style="margin-left: 120px" >Сначала</div>
+            <div class="arrow"><img src="img/green_arrow.svg"></div>
+
+            <div class="step" data-id="2" id="2" >Затем</div>
+            <div class="arrow"><img src="img/green_arrow.svg"></div>
+
+            <div class="step" data-id="3" id="3" >Следом</div>
+            <div class="arrow"><img src="img/green_arrow.svg"></div>
+
+            <div class="step" data-id="4" id="4">После этого</div>
+            <div class="arrow"><img src="img/green_arrow.svg"></div>
+
+            <div class="step" data-id="5" id="5" >В конце</div>
+        </div>
+
+        <div class="droppables">
+            <div class="droppable" droppable data-id="1" style="margin-left: 40px"><p>Bведите вариант ответа</p></div>
+            <div class="droppable" droppable data-id="2"><p>Bведите вариант ответа</p></div>
+            <div class="droppable" droppable data-id="3"><p>Bведите вариант ответа</p></div>
+            <div class="droppable" droppable data-id="4"><p>Bведите вариант ответа</p></div>
+            <div class="droppable" droppable data-id="5"><p>Bведите вариант ответа</p></div>
+        </div>
+
+        <div class="draggables">
+            <div class="tutorial">
+                <img src="img/blue_arrow.svg" style="position: absolute; left: 422px;    top: -46px;">
+                <h2>Как вы отреагируете</br>
+                    на фразу</br>
+                    первостольника? </h2>
+                Постройте стратегию общения, перетаскивая последовательные действия в блоки наверху
+            </div>
+           <div class="slick_me">
+
+                <div><div class="draggable" draggable data-id="1"><p >Начинаю убеждать Александру в том, что наш препарат во много раз лучше конкурента, сколько бы времени это не заняло.</p></div></div>
+                <div><div class="draggable" draggable data-id="2"><p >На следующем визите узнаю об опыте рекомендации препарата Pfizer в данную нишу.</p></div></div>
+                <div><div class="draggable" draggable data-id="3"><p >Делаю вывод, что в данной ситуации я ничего не могу сделать и закрываю тему.</p></div></div>
+                <div><div class="draggable" draggable data-id="4"><p >Узнав об этом, не огорчаюсь, т.к. знаю, что нужно делать в данной ситуации.</p></div></div>
+                <div><div class="draggable" draggable data-id="5"><p style="font-size: 28px; margin-top: 32px">Предлагаю Александре порекомендовать гель Далацин покупателю при его отказе от первого предложения, озвучивая конкурентные преимущества препарата.</p></div></div>
+                <div><div class="draggable" draggable data-id="6"><p style="font-size: 28px; margin-top: 32px">Строю дальнейший разговор на примерах отказа от первого предложения по причине возможных побочных действий, способу применения, "пробовал - не помогает" и пр.</p></div></div>
+                <div><div class="draggable" draggable data-id="7"><p style="font-size: 28px; margin-top: 32px;">Говорю, что бывают ситуации, когда покупатель отказывается от первого предложения. При этом вижу, что Александра соглашается с этим, кивая головой. </p></div></div>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="result modal-sound"></div>
+        <div class="next">
+            <img src="img/metrafor.png" style="position: absolute; bottom: 5px">
+            <a href="index.html">
+                <button class="submit magic" id="submit_3" data-link="3">
+                    Далее
+                </button>
+            </a>
+        </div>
+
+
+
+    </div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+
+
+    <script type="text/javascript" src="slick-1.5.9/slick/slick.min.js"></script>
+    <script type="text/javascript" src="init.js"></script>
+    <script type="text/javascript">
+        $('.slick_me').slick({
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            dots: true,
+            draggable: false,
+            speed: 300,
+            infinite: false
+
+        });
+
+    </script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>
