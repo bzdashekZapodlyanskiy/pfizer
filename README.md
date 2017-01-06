@@ -1,0 +1,2 @@
+# pfizer
+pfizer trening
